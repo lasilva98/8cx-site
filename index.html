@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8CX — Consultoria Zendesk e CX</title>
+<meta name="description" content="A 8CX implementa, otimiza e expande o Zendesk para empresas que querem transformar atendimento em experiência: IA, WhatsApp, integrações e Help Center.">
+<link rel="canonical" href="https://8cx.com.br/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="8CX">
+<meta property="og:url" content="https://8cx.com.br/">
+<meta property="og:title" content="8CX — Consultoria Zendesk e CX">
+<meta property="og:description" content="Implementamos, otimizamos e expandimos o seu Zendesk: IA, WhatsApp, integrações e Help Center.">
+<meta property="og:image" content="https://8cx.com.br/assets/og-8cx.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"8CX","url":"https://8cx.com.br/","logo":"https://8cx.com.br/assets/icon-512.png","image":"https://8cx.com.br/assets/og-8cx.png","description":"Consultoria especializada em Customer Experience e Zendesk.","email":"contato@8cx.com.br","telephone":"+55-11-98539-6968","foundingDate":"2022","address":{"@type":"PostalAddress","streetAddress":"Avenida Paulista, 1374 - Bela Vista","addressLocality":"São Paulo","addressRegion":"SP","postalCode":"01310-914","addressCountry":"BR"},"sameAs":["https://www.linkedin.com/company/8cx/"]}</script>
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#F4F1EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F4F1EA; --paper:#FBFAF6; --ink:#111111; --ink-2:#2A2926; --muted:#6B6862;
+  --line:rgba(17,17,17,.12); --orange:#F25214; --orange-soft:#FFE3D6; --sel:#2F5BEA;
+  --radius:14px; --mono:"JetBrains Mono",ui-monospace,monospace; --sans:"Inter Tight",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.ph{display:inline-block;border:1px dashed var(--orange);color:var(--orange);font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;vertical-align:middle}
+
+/* ---------- loader ---------- */
+#loader{position:fixed;inset:0;background:var(--ink);z-index:100;display:grid;place-items:center;color:#fff}
+#loader .box{display:flex;flex-direction:column;align-items:center;gap:22px}
+#loader img{width:110px;filter:brightness(0) invert(1)}
+#loader .bar{width:180px;height:2px;background:rgba(255,255,255,.15);overflow:hidden}
+#loader .bar i{display:block;height:100%;width:0;background:var(--orange)}
+#loader .count{position:absolute;bottom:28px;left:32px;font-family:var(--mono);font-size:12px;opacity:.6}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed;top:14px;left:14px;right:14px;z-index:50;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.topbar > *{pointer-events:auto}
+.pill{background:rgba(251,250,246,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:8px;height:36px;display:inline-flex;align-items:center;gap:10px;padding:0 12px;font-size:13px;font-weight:500;white-space:nowrap}
+.pill.brand{font-weight:600;letter-spacing:.02em}
+.pill.brand img{height:14px}
+.top-right{display:flex;gap:6px}
+.pill.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill.dark:hover{background:var(--orange);border-color:var(--orange)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--orange);display:inline-block}
+.toggle{width:30px;height:17px;border-radius:20px;background:#d9d5cc;position:relative;transition:background .25s}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:transform .25s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.grav.on .toggle{background:var(--orange)}
+.grav.on .toggle::after{transform:translateX(13px)}
+
+/* ---------- desktop hero ---------- */
+.desktop{position:relative;height:100vh;min-height:640px;overflow:hidden;
+  background-image:radial-gradient(rgba(17,17,17,.09) 1px,transparent 1px);background-size:22px 22px}
+.stage{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;perspective:900px}
+.stage-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:26px;transform-style:preserve-3d}
+.big-logo{width:min(46vw,620px);filter:drop-shadow(0 30px 40px rgba(242,82,20,.25))}
+.logo-box{position:relative}
+.ring{position:absolute;width:clamp(96px,10vw,150px);aspect-ratio:1;top:-8%;right:-7%;background:var(--paper);border-radius:50%;box-shadow:0 10px 30px rgba(0,0,0,.12);border:1px solid var(--line)}
+.ring text{font-family:var(--mono);font-size:27px;letter-spacing:4px;fill:var(--ink);font-weight:500}
+.ring .star{position:absolute;inset:0;display:grid;place-items:center;color:var(--orange);font-size:clamp(22px,2.4vw,34px)}
+.hero-copy{text-align:center;max-width:620px;padding:0 20px}
+.hero-copy h1{font-size:clamp(26px,3.1vw,44px);line-height:1.02;letter-spacing:-.035em;font-weight:600}
+.hero-copy h1 em{font-style:normal;color:var(--orange)}
+.hero-copy p{margin-top:12px;color:var(--muted);font-size:15px}
+
+.icon{position:absolute;width:104px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:grab;user-select:none;-webkit-user-select:none;z-index:5;touch-action:none}
+.icon:active{cursor:grabbing}
+.icon .thumb{width:62px;height:62px;display:grid;place-items:center;position:relative}
+.icon .name{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.02em;padding:2px 5px;border-radius:3px;text-align:center;line-height:1.3}
+.icon.sel .name{background:var(--sel);color:#fff}
+.icon.sel .thumb{outline:2px solid rgba(47,91,234,.35);outline-offset:3px;border-radius:10px}
+/* folder */
+.folder{width:62px;height:48px;background:#151515;border-radius:4px 6px 6px 6px;position:relative;box-shadow:0 6px 14px rgba(0,0,0,.18)}
+.folder::before{content:"";position:absolute;top:-6px;left:0;width:26px;height:9px;background:#151515;border-radius:4px 4px 0 0}
+.folder .tag{position:absolute;right:6px;bottom:7px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:7px;padding:1px 4px;border-radius:2px;letter-spacing:.05em}
+/* app tile */
+.tile{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;box-shadow:0 8px 18px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.35);font-weight:700;font-size:20px;letter-spacing:-.03em}
+.tile svg{width:28px;height:28px}
+.t-orange{background:linear-gradient(160deg,#ff7a45,var(--orange));color:#fff}
+.t-ink{background:linear-gradient(160deg,#333,#0d0d0d);color:#fff}
+.t-paper{background:linear-gradient(160deg,#fff,#ece8df);color:var(--ink)}
+.t-green{background:linear-gradient(160deg,#4be07f,#1aa652);color:#fff}
+.t-blue{background:linear-gradient(160deg,#6c8cff,#2f4fd8);color:#fff}
+/* doc */
+.doc{width:46px;height:58px;background:#fff;border-radius:3px;box-shadow:0 6px 14px rgba(0,0,0,.14);position:relative;overflow:hidden}
+.doc::after{content:"";position:absolute;top:0;right:0;width:14px;height:14px;background:linear-gradient(225deg,var(--cream) 50%,#ddd 50%)}
+.doc .l{position:absolute;left:7px;right:9px;height:3px;background:#e5e1d8;border-radius:2px}
+.doc .badge{position:absolute;bottom:6px;left:6px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:7px;padding:1px 4px;border-radius:2px}
+
+/* windows */
+.win{position:absolute;width:min(560px,calc(100vw - 32px));background:var(--paper);border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.22),0 0 0 1px rgba(0,0,0,.08);overflow:hidden;z-index:20}
+.win .bar{height:34px;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--line);cursor:grab;background:#f3f1ec}
+.win .bar .title{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-2)}
+.win .lights{position:absolute;left:12px;display:flex;gap:7px}
+.win .lights i{width:11px;height:11px;border-radius:50%;background:#ddd}
+.win .lights i.c{background:#ff5f57;cursor:pointer}
+.win .lights i.m{background:#febc2e}.win .lights i.x{background:#28c840}
+.win .body{padding:22px 24px 24px;max-height:min(62vh,520px);overflow:auto}
+.win h3{font-size:26px;letter-spacing:-.03em;line-height:1.05;font-weight:600}
+.win .kicker{color:var(--orange);margin-bottom:8px}
+.win p{color:var(--ink-2);font-size:15px;margin-top:10px}
+.win ul{list-style:none;margin-top:14px;border-top:1px solid var(--line)}
+.win li{padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;display:flex;gap:10px}
+.win li::before{content:"↘";color:var(--orange)}
+.win .foot{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;border-top:1px solid var(--line);font-size:13px}
+.win .foot a{color:var(--sel);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{border:1px solid var(--line);border-radius:30px;padding:5px 11px;font-size:13px;background:#fff}
+.mock-ui{margin-top:16px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px}
+.mock-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f0ede6;font-size:13px}
+.mock-row:last-child{border:0}
+.st{font-family:var(--mono);font-size:9.5px;padding:2px 6px;border-radius:3px;color:#fff}
+.st.o{background:var(--orange)}.st.g{background:#1aa652}.st.b{background:var(--sel)}
+.bars{display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:6px}
+.bars i{flex:1;background:var(--ink);border-radius:3px 3px 0 0}
+.bars i:nth-child(4n){background:var(--orange)}
+
+/* dock */
+.dock{position:fixed;bottom:16px;left:50%;translate:-50% 0;z-index:60;background:var(--ink);color:#fff;border-radius:10px;height:50px;width:min(440px,calc(100vw - 28px));display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 16px;box-shadow:0 14px 40px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.14)}
+.dock img{height:16px;filter:brightness(0) invert(1)}
+.dock .ex{font-weight:500;letter-spacing:.08em;font-size:13px}
+.dock .burger{width:36px;height:36px;display:grid;place-items:center;border-radius:6px}
+.dock .burger:hover{background:rgba(255,255,255,.1)}
+.dock .burger span{display:block;width:16px;height:1.5px;background:#fff;position:relative;transition:transform .3s}
+.dock .burger span::before,.dock .burger span::after{content:"";position:absolute;left:0;width:16px;height:1.5px;background:#fff;transition:transform .3s}
+.dock .burger span::before{top:-5px}.dock .burger span::after{top:5px}
+body.menu-open .dock .burger span{background:transparent}
+body.menu-open .dock .burger span::before{transform:translateY(5px) rotate(45deg)}
+body.menu-open .dock .burger span::after{transform:translateY(-5px) rotate(-45deg)}
+
+#menu{position:fixed;inset:0;z-index:55;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:90px 32px 110px;visibility:hidden;clip-path:inset(100% 0 0 0)}
+#menu nav{display:flex;flex-direction:column;max-width:1320px;width:100%;margin:0 auto}
+#menu a{font-size:clamp(38px,7vw,96px);font-weight:600;letter-spacing:-.045em;line-height:1.02;display:flex;align-items:baseline;gap:18px;overflow:hidden}
+#menu a .n{font-family:var(--mono);font-size:12px;color:var(--orange);letter-spacing:.05em}
+#menu a span.t{display:inline-block}
+#menu a:hover span.t{color:var(--orange)}
+#menu .meta{max-width:1320px;width:100%;margin:40px auto 0;display:flex;gap:28px;flex-wrap:wrap;opacity:.6;font-size:14px}
+
+/* ---------- sections ---------- */
+section{position:relative}
+.sec{padding:140px 0}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:28px;color:var(--muted)}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--orange)}
+.h2{font-size:clamp(40px,5.6vw,84px);line-height:.98;letter-spacing:-.045em;font-weight:600}
+.h2 .o{color:var(--orange)}
+.lead{font-size:19px;color:var(--ink-2);max-width:560px}
+
+.manifesto{padding:160px 0 120px}
+.manifesto p{font-size:clamp(30px,4.2vw,62px);line-height:1.06;letter-spacing:-.035em;font-weight:500;max-width:1180px}
+.manifesto p b{color:var(--orange);font-weight:500}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);margin-top:90px}
+.stat{padding:26px 24px 0 0;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat + .stat{padding-left:24px}
+.stat .num{font-size:clamp(52px,6vw,92px);letter-spacing:-.05em;font-weight:600;line-height:1}
+.stat .num sup{font-size:.4em;color:var(--orange);vertical-align:top;margin-left:4px}
+.stat p{color:var(--muted);font-size:15px;margin-top:10px;max-width:240px}
+
+.logos{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:30px 0;overflow:hidden;background:var(--paper)}
+.logos .row{display:flex;gap:80px;width:max-content;animation:marq 32s linear infinite}
+.logos .lg{display:flex;align-items:center;gap:80px;height:60px}
+.logos .lg img{width:auto;opacity:.55;transition:opacity .3s}
+.logos .lg img:hover{opacity:1}
+.logos .lg::after{content:"✳";color:var(--orange);font-size:18px}
+.logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.logo-grid div{background:#fff;border:1px solid var(--line);border-radius:10px;height:76px;display:grid;place-items:center;padding:14px}
+.logo-grid img{max-height:30px;max-width:100%;width:auto;opacity:.8}
+@keyframes marq{to{transform:translateX(-50%)}}
+.logos-head{display:flex;justify-content:space-between;align-items:center;padding:0 32px 22px;max-width:1320px;margin:0 auto}
+
+/* paths: stacked cards */
+.paths-head{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:70px}
+.path{position:sticky;top:90px;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:44px;display:grid;grid-template-columns:120px 1.1fr 1fr;gap:40px;min-height:340px;margin-bottom:24px;transform-origin:center top;box-shadow:0 -10px 40px rgba(0,0,0,.04)}
+.path:nth-child(2){top:110px}.path:nth-child(3){top:130px}
+.path.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.path.orange{background:var(--orange);color:#fff;border-color:var(--orange)}
+.path .idx{font-size:110px;font-weight:600;letter-spacing:-.06em;line-height:.8}
+.path h3{font-size:clamp(30px,3vw,46px);line-height:1;letter-spacing:-.04em;font-weight:600}
+.path .q{margin-top:18px;font-size:17px;opacity:.75;max-width:420px}
+.path ul{list-style:none;border-top:1px solid currentColor;align-self:start}
+.path li{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(127,127,127,.35);font-size:17px}
+.path li span{opacity:.6;font-family:var(--mono);font-size:11px}
+.path .go{margin-top:28px;display:inline-flex;gap:8px;align-items:center;border:1px solid currentColor;border-radius:40px;padding:10px 18px;font-size:14px;font-weight:500}
+
+/* specialties list */
+.spec{border-top:1px solid var(--ink)}
+.spec a{display:grid;grid-template-columns:70px 1fr 1.1fr 40px;gap:20px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.spec a::before{content:"";position:absolute;inset:0;background:var(--orange);transform:scaleY(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.7,0,.2,1);z-index:0}
+.spec a:hover::before{transform:scaleY(1)}
+.spec a > *{position:relative;z-index:1;transition:color .3s,transform .45s}
+.spec a:hover > *{color:#fff}
+.spec a:hover .t{transform:translateX(14px)}
+.spec .t{font-size:clamp(26px,3vw,42px);font-weight:600;letter-spacing:-.035em;line-height:1}
+.spec .d{color:var(--muted);font-size:16px}
+.spec .ar{font-size:24px;justify-self:end}
+
+/* method horizontal */
+.method{background:var(--ink);color:#fff;overflow:hidden}
+.method .pin{height:100vh;display:flex;flex-direction:column;justify-content:center}
+.method .head{padding:0 32px;max-width:1320px;margin:0 auto 54px;width:100%;display:flex;justify-content:space-between;align-items:end;gap:30px}
+.method .eyebrow{color:rgba(255,255,255,.55)}
+.track{display:flex;gap:24px;padding-left:max(32px,calc((100vw - 1320px)/2 + 32px));width:max-content}
+.phase{width:min(440px,78vw);height:min(420px,52vh);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:34px;display:flex;flex-direction:column;justify-content:space-between;background:#181818;flex-shrink:0}
+.phase .top{display:flex;justify-content:space-between;color:rgba(255,255,255,.55)}
+.phase h3{font-size:clamp(38px,4vw,58px);letter-spacing:-.045em;line-height:.95;font-weight:600}
+.phase p{color:rgba(255,255,255,.7);font-size:16px;margin-top:14px}
+.phase.hc{background:var(--orange);border-color:var(--orange)}
+.phase.hc p,.phase.hc .top{color:rgba(255,255,255,.9)}
+.progress{height:2px;background:rgba(255,255,255,.12);margin:50px 32px 0;max-width:1256px;width:calc(100% - 64px);align-self:center}
+.progress i{display:block;height:100%;width:0;background:var(--orange)}
+
+/* sectors */
+.sectors{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px}
+.sector{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .4s,background .4s}
+.sector:hover{transform:translateY(-6px);background:#fff}
+.sector .ico{width:46px;height:46px;border-radius:12px;background:var(--orange-soft);display:grid;place-items:center;color:var(--orange)}
+.sector .ico svg{width:22px;height:22px}
+.sector h3{font-size:26px;letter-spacing:-.035em;line-height:1.02;font-weight:600;margin-top:60px}
+.sector p{color:var(--muted);font-size:15px;margin-top:10px}
+.sector .who{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink-2)}
+
+/* why */
+.why{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.why-list{border-top:1px solid var(--ink)}
+.why-item{display:grid;grid-template-columns:50px 1fr;gap:16px;padding:26px 0;border-bottom:1px solid var(--line)}
+.why-item h4{font-size:22px;letter-spacing:-.02em;font-weight:600}
+.why-item p{color:var(--muted);font-size:15.5px;margin-top:6px}
+.why-item .n{color:var(--orange)}
+.quote-win{position:sticky;top:110px;background:var(--paper);border-radius:14px;box-shadow:0 30px 70px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.07);overflow:hidden}
+.quote-win blockquote{font-size:clamp(24px,2.3vw,32px);letter-spacing:-.03em;line-height:1.15;padding:34px 30px 10px;font-weight:500}
+.quote-win .by{padding:16px 30px 30px;display:flex;gap:12px;align-items:center;color:var(--muted);font-size:14px}
+.quote-win .av{width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:600;font-size:15px;letter-spacing:.02em;flex-shrink:0}
+
+/* faq */
+.faq{display:grid;grid-template-columns:1fr 1.3fr;gap:80px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:first-child{border-top:1px solid var(--ink)}
+.faq summary{list-style:none;cursor:pointer;padding:24px 0;display:flex;justify-content:space-between;gap:20px;font-size:20px;font-weight:500;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{font-style:normal;color:var(--orange);transition:transform .3s;font-size:24px;line-height:1}
+.faq details[open] summary i{transform:rotate(45deg)}
+.faq details p{padding:0 40px 24px 0;color:var(--ink-2)}
+
+/* cta */
+.cta{background:var(--orange);color:#fff;padding:150px 0 130px;overflow:hidden}
+.cta .eyebrow::before{background:#fff}
+.cta h2{font-size:clamp(54px,10vw,170px);line-height:.88;letter-spacing:-.06em;font-weight:600}
+.cta .row{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-top:60px;flex-wrap:wrap}
+.cta p{max-width:440px;font-size:19px}
+.magnet{width:190px;height:190px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;text-align:center;font-weight:500;font-size:16px;line-height:1.2}
+footer{background:var(--ink);color:rgba(255,255,255,.75);padding:70px 0 120px;font-size:14.5px}
+footer .grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+footer h5{color:#fff;font-size:13px;margin-bottom:14px}
+footer li{list-style:none;margin-bottom:8px}
+footer a:hover{color:var(--orange)}
+footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12.5px;opacity:.6}
+
+
+/* ---------- whatsapp widget ---------- */
+.wa{position:fixed;right:24px;bottom:22px;z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
+.wa > *{pointer-events:auto}
+.wa-btn{position:relative;width:60px;height:60px;border-radius:50%;background:var(--ink);display:grid;place-items:center;box-shadow:0 14px 34px rgba(0,0,0,.28);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.wa-btn:hover{transform:scale(1.07)}
+.wa-btn svg{width:28px;height:28px;position:relative;z-index:1}
+.wa-btn .ic-close{position:absolute;opacity:0;transform:rotate(-90deg) scale(.6);transition:all .3s}
+.wa-btn .ic-wa{transition:all .3s}
+.wa.open .wa-btn .ic-wa{opacity:0;transform:rotate(90deg) scale(.6)}
+.wa.open .wa-btn .ic-close{opacity:1;transform:none}
+.wa-btn::before,.wa-btn::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;animation:waPulse 2.4s cubic-bezier(.2,.6,.4,1) infinite}
+.wa-btn::after{animation-delay:1.2s}
+.wa.open .wa-btn::before,.wa.open .wa-btn::after{animation:none;opacity:0}
+@keyframes waPulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+.wa-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--orange);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;z-index:2;border:2px solid var(--cream)}
+.wa.seen .wa-badge{display:none}
+.wa-peek{background:var(--paper);border:1px solid var(--line);border-radius:14px 14px 4px 14px;padding:12px 14px 12px 12px;box-shadow:0 14px 34px rgba(0,0,0,.14);display:flex;gap:10px;align-items:center;font-size:14px;max-width:270px;cursor:pointer;visibility:hidden}
+.wa-peek b{display:block;font-size:13.5px}
+.wa-peek span{color:var(--muted);font-size:13px;line-height:1.35}
+.wa-peek .x{align-self:flex-start;color:var(--muted);font-size:16px;line-height:1;margin-left:4px}
+.wa-av{width:40px;height:40px;border-radius:50%;background:var(--ink);display:grid;place-items:center;position:relative;flex-shrink:0}
+.wa-av img{width:68%}
+.wa-mini{position:absolute;right:-3px;bottom:-3px;width:18px;height:18px;border-radius:50%;background:#25D366;display:grid;place-items:center;border:2px solid var(--paper)}
+.wa-mini svg{width:10px;height:10px}
+.wa-pill{margin-left:auto;position:relative;display:inline-flex;align-items:center;gap:6px;background:#25D366;color:#0b3d1f;font-size:12px;font-weight:600;padding:5px 10px 5px 8px;border-radius:30px}
+.wa-pill svg{width:14px;height:14px}
+.wa-card{width:min(360px,calc(100vw - 28px));background:var(--paper);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.06);transform-origin:bottom right;visibility:hidden}
+.wa-head{background:var(--ink);color:#fff;padding:18px 18px 16px;display:flex;gap:12px;align-items:center;position:relative;overflow:hidden}
+.wa-head::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(242,82,20,.55),transparent 65%);right:-90px;top:-110px}
+.wa-head .wa-av{width:46px;height:46px;background:#fff}
+.wa-head .wa-mini{border-color:var(--ink)}
+.wa-head b{font-size:16px;letter-spacing:-.01em;display:block}
+.wa-head small{color:rgba(255,255,255,.65);font-size:12.5px}
+.wa-head .brand{margin-left:auto;position:relative}
+.wa-head .brand img{height:14px;filter:brightness(0) invert(1);opacity:.85}
+.wa-body{padding:18px;min-height:190px;display:flex;flex-direction:column;gap:10px;background:
+  radial-gradient(rgba(17,17,17,.06) 1px,transparent 1px) 0 0/16px 16px, #F1EEE7}
+.wa-day{align-self:center;background:rgba(255,255,255,.85);border-radius:6px;padding:3px 9px;font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase}
+.bub{max-width:84%;padding:10px 13px 8px;border-radius:4px 14px 14px 14px;background:#fff;font-size:14.5px;line-height:1.4;box-shadow:0 1px 1px rgba(0,0,0,.06);position:relative}
+.bub time{display:block;text-align:right;font-size:10.5px;color:#9a968d;margin-top:2px}
+.bub.me{align-self:flex-end;background:#D9FDD3;border-radius:14px 4px 14px 14px}
+.bub.me time::after{content:" ✓✓";color:#53bdeb}
+.bub.me .lbl{display:block;font-family:var(--mono);font-size:9.5px;text-transform:uppercase;color:#1a7f45;margin-bottom:3px;letter-spacing:.04em}
+.typing{display:inline-flex;gap:4px;padding:13px 14px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#b9b4aa;animation:typ 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes typ{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.wa-cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 18px 18px;height:50px;border-radius:12px;background:#25D366;color:#0b3d1f;font-weight:600;font-size:15px;position:relative;overflow:hidden;transition:transform .25s}
+.wa-cta:hover{transform:translateY(-2px)}
+.wa-cta::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%,55%{left:-60%}100%{left:130%}}
+.wa-cta svg{width:20px;height:20px}
+.wa-foot{text-align:center;font-size:11.5px;color:var(--muted);padding:0 18px 16px;margin-top:-6px}
+@media (max-width:900px){ .wa{right:14px;bottom:78px} .wa-btn{width:54px;height:54px} }
+@media (prefers-reduced-motion:reduce){ .wa-btn::before,.wa-btn::after,.wa-cta::after,.typing i{animation:none} }
+
+
+/* ---------- tram photo ---------- */
+.photo{padding:120px 0 0}
+.photo-win{border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 40px 90px rgba(0,0,0,.16),0 0 0 1px rgba(0,0,0,.07);will-change:clip-path}
+.photo-win .bar{height:36px;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid var(--line);background:#f3f1ec}
+.photo-win .bar .title{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-2)}
+.photo-win .lights{position:absolute;left:14px;display:flex;gap:7px}
+.photo-win .lights i{width:11px;height:11px;border-radius:50%}
+.photo-frame{overflow:hidden;aspect-ratio:1377/681;background:#ddd}
+.photo-frame img{width:100%;height:100%;object-fit:cover;transform-origin:center;will-change:transform}
+.photo-cap{display:flex;justify-content:space-between;gap:20px;margin-top:18px;color:var(--muted)}
+@media (max-width:900px){ .photo{padding:80px 0 0} .photo-frame{aspect-ratio:4/3} .photo-frame img{object-position:58% 50%} }
+@media (max-width:560px){ .photo-cap{flex-direction:column;gap:6px} }
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .sectors{grid-template-columns:1fr 1fr}
+  .sector{min-height:280px}
+  .sector h3{margin-top:36px}
+  .why,.faq{gap:48px}
+  .path{grid-template-columns:90px 1fr 1fr;gap:28px;padding:36px}
+  .path .idx{font-size:84px}
+  .stat .num{font-size:clamp(44px,5.4vw,80px)}
+}
+@media (max-width:900px){
+  .wrap{padding:0 16px}
+  .topbar{top:10px;left:10px;right:10px}
+  .pill.clock,.pill.badge{display:none}
+  .pill{height:34px;font-size:12px;padding:0 10px}
+  .big-logo{width:min(62vw,400px)}
+  .hero-copy h1{font-size:clamp(26px,6.4vw,40px)}
+  .hero-copy p{font-size:14px;max-width:420px;margin-left:auto;margin-right:auto}
+  .icon{width:84px}
+  .icon .thumb{transform:scale(.85)}
+  .icon .name{font-size:9.5px}
+  .ring{top:-34%;right:-16%}
+  .icon.hide-m{display:none}
+  .sec{padding:96px 0}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(3){padding-left:0}
+  .stat{padding-bottom:26px;border-bottom:1px solid var(--line)}
+  .paths-head,.why,.faq{grid-template-columns:1fr;gap:30px}
+  .path{grid-template-columns:1fr;padding:28px;gap:20px;top:70px}
+  .path:nth-child(2){top:84px}.path:nth-child(3){top:98px}
+  .path .idx{font-size:64px}
+  .spec a{grid-template-columns:44px 1fr 28px}
+  .spec .d{display:none}
+  .sectors{grid-template-columns:1fr 1fr}
+  .method .pin{height:auto;padding:96px 0}
+  .track{flex-direction:column;width:auto;padding:0 16px}
+  .phase{width:100%;height:auto;min-height:260px}
+  .progress{display:none}
+  .method .head{padding:0 16px;flex-direction:column;align-items:flex-start;margin-bottom:36px}
+  .logos .row{gap:48px}
+  .logos .lg{gap:48px;height:44px}
+  .logos .lg img{transform:scale(.78)}
+  .logos-head{padding:0 16px 16px}
+  .cta{padding:110px 0 120px}
+  .cta h2{font-size:clamp(46px,12vw,90px)}
+  .manifesto{padding:110px 0 80px}
+  .stats{margin-top:60px}
+  .spec a{padding:20px 0}
+  .faq summary{font-size:18px}
+  .win .body{padding:18px}
+  .win h3{font-size:22px}
+  footer .grid{grid-template-columns:1fr 1fr}
+  .quote-win{position:relative;top:0}
+}
+@media (max-width:560px){
+  .icon .name{font-size:8.5px;word-break:break-all;max-width:80px}
+  .sectors{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .stat,.stat + .stat{padding-left:0;border-right:0}
+  .pill.grav .lbl,.pill.brand .bt{display:none}
+  .magnet{width:150px;height:150px}
+  .path{padding:24px}
+  .path li{font-size:15.5px}
+  footer .grid{grid-template-columns:1fr}
+  .why-item{grid-template-columns:36px 1fr}
+  .quote-win blockquote{padding:26px 22px 8px}
+  .quote-win .by{padding:14px 22px 24px;flex-wrap:wrap}
+  .h2{font-size:clamp(36px,10.5vw,56px)}
+}
+@media (max-width:340px){ .cta-l{display:none} .pill.dark{padding:0 12px} }
+@media (prefers-reduced-motion:reduce){
+  .logos .row{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="box"><img src="assets/logo-8cx.png" alt=""><div class="bar"><i></i></div></div><div class="count">CARREGANDO <span id="pct">0</span>%</div></div>
+
+<!-- top bar -->
+<header class="topbar">
+  <a href="#top" class="pill brand"><img src="assets/logo-8cx.png" alt="8CX"> <span class="bt">CONSULTORIA ZENDESK©</span></a>
+  <div class="top-right">
+    <span class="pill badge"><span class="dot"></span> Especialistas em Zendesk</span>
+    <button class="pill grav" id="grav" aria-pressed="false"><span class="lbl">Gravidade</span><span class="toggle"></span></button>
+    <span class="pill clock"><span class="dot" style="background:#1aa652"></span><span id="clock">—</span></span>
+    <a href="#contato" class="pill dark"><span class="cta-l">Fale com a gente</span> ↗</a>
+  </div>
+</header>
+
+<!-- dock -->
+<div class="dock">
+  <img src="assets/logo-8cx.png" alt="8CX">
+  <span class="ex">EXPLORAR</span>
+  <button class="burger" id="burger" aria-label="Abrir menu"><span></span></button>
+</div>
+<div id="menu">
+  <nav>
+    <a href="#top"><span class="n">01</span><span class="t">Início</span></a>
+    <a href="#servicos"><span class="n">02</span><span class="t">Serviços</span></a>
+    <a href="#metodologia"><span class="n">03</span><span class="t">Metodologia</span></a>
+    <a href="#setores"><span class="n">04</span><span class="t">Setores</span></a>
+    <a href="#por-que"><span class="n">05</span><span class="t">Por que a 8CX</span></a>
+    <a href="#contato"><span class="n">06</span><span class="t">Contato</span></a>
+  </nav>
+  <div class="meta"><span>contato@8cx.com.br</span><span>Av. Paulista, 1374 — São Paulo</span><a href="https://www.linkedin.com/company/8cx/" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+</div>
+
+<main id="top">
+<!-- ================= HERO / DESKTOP ================= -->
+<section class="desktop" id="desktop">
+  <div class="stage">
+    <div class="stage-inner" id="stageInner">
+      <div class="logo-box">
+        <img class="big-logo" id="bigLogo" src="assets/logo-8cx.png" alt="8CX">
+        <div class="ring" aria-hidden="true"><svg viewBox="0 0 400 400" class="ring-svg"><defs><path id="c" d="M200,200 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"/></defs>
+          <text><textPath href="#c" textLength="935">EMPOWERING CX ✳ ZENDESK EXCELLENCE ✳ </textPath></text></svg><span class="star">✳</span></div>
+      </div>
+      <div class="hero-copy">
+        <h1 id="heroTitle">Atendimento é a ponte entre <em>pessoas</em> e <em>marcas</em>.</h1>
+        <p>Implementamos, otimizamos e expandimos o seu Zendesk. Arraste os arquivos, abra as janelas ou ligue a gravidade.</p>
+      </div>
+    </div>
+  </div>
+  <!-- icons injected by JS -->
+</section>
+
+<!-- ================= MANIFESTO + STATS ================= -->
+<section class="manifesto">
+  <div class="wrap">
+    <div class="eyebrow mono">Sobre a 8CX</div>
+    <p id="manifesto">Na 8CX, atendimento é muito mais do que resolver chamados. Unimos <b>tecnologia de ponta</b>, estratégia digital e foco humano para transformar cada interação em uma <b>experiência de valor</b>.</p>
+    <div class="stats">
+      <div class="stat"><div class="num"><span data-count="10">0</span><sup>+</sup></div><p>anos de experiência dos sócios em Zendesk e plataformas de atendimento</p></div>
+      <div class="stat"><div class="num"><span data-count="2022">0</span></div><p>ano de fundação, em São Paulo, a partir de projetos sob demanda</p></div>
+      <div class="stat"><div class="num"><span data-count="2">0</span><sup>sem.</sup></div><p>de hypercare incluídas após cada implementação ou melhoria</p></div>
+      <div class="stat"><div class="num"><span data-count="2023">0</span></div><p>Zendesk Awards conquistado em projeto conduzido pelos sócios (Ambev)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOGOS ================= -->
+<section>
+  <div class="logos-head"><span class="mono" style="color:var(--muted)">Quem confia na 8CX</span><span class="mono" style="color:var(--muted)">06 clientes ✳ 2022 — hoje</span></div>
+  <div class="logos"><div class="row">
+    <div class="lg"><img src="assets/clientes/vissimo.png" alt="Víssimo Group" style="height:40px" loading="lazy"></div><div class="lg"><img src="assets/clientes/pacco.png" alt="PACCO" style="height:34px" loading="lazy"></div><div class="lg"><img src="assets/clientes/bunge.png" alt="Bunge" style="height:30px" loading="lazy"></div><div class="lg"><img src="assets/clientes/zig.png" alt="Zig" style="height:42px" loading="lazy"></div><div class="lg"><img src="assets/clientes/paytime.png" alt="Paytime" style="height:26px" loading="lazy"></div><div class="lg"><img src="assets/clientes/sesi.png" alt="SESI" style="height:34px" loading="lazy"></div>
+    <div class="lg"><img src="assets/clientes/vissimo.png" alt="Víssimo Group" style="height:40px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/pacco.png" alt="PACCO" style="height:34px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/bunge.png" alt="Bunge" style="height:30px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/zig.png" alt="Zig" style="height:42px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/paytime.png" alt="Paytime" style="height:26px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/sesi.png" alt="SESI" style="height:34px" loading="lazy" aria-hidden="true"></div>
+  </div></div>
+</section>
+
+
+<!-- ================= PHOTO ================= -->
+<section class="photo">
+  <div class="wrap">
+    <div class="photo-win" id="photoWin">
+      <div class="bar"><div class="lights"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span class="title">BE_THE_COMPANY.jpg</span></div>
+      <div class="photo-frame"><picture><source srcset="assets/zendesk-tram.webp" type="image/webp"><img id="photoImg" src="assets/zendesk-tram.jpg" alt="Bonde com a campanha da Zendesk: Be the company your customers want you to be" width="1377" height="681" loading="lazy"></picture></div>
+    </div>
+    <div class="photo-cap mono"><span>✳ Be the company your customers want you to be.</span><span>8CX ✳ Especialistas em Zendesk</span></div>
+  </div>
+</section>
+
+<!-- ================= PATHS ================= -->
+<section class="sec" id="servicos">
+  <div class="wrap">
+    <div class="paths-head">
+      <div><div class="eyebrow mono">Serviços</div><h2 class="h2">Em que momento está o seu <span class="o">atendimento?</span></h2></div>
+      <p class="lead">Começando do zero ou prontos para ir além: todo projeto da 8CX parte de um destes três caminhos. A gente ajuda você a descobrir qual é o seu.</p>
+    </div>
+    <div class="paths">
+      <article class="path">
+        <div class="idx">01</div>
+        <div><h3>Começando no Zendesk</h3><p class="q">“Vamos lançar o atendimento pela primeira vez ou trocar uma ferramenta que já não dá conta.”</p><a href="#contato" class="go">Quero começar ↗</a></div>
+        <ul><li>Implementação Zendesk <span>SUPPORT · GUIDE</span></li><li>Migração de dados <span>ZIP → ZD</span></li><li>Regras de negócio e SLAs <span>FILAS</span></li><li>Treinamento do time <span>ONBOARDING</span></li></ul>
+      </article>
+      <article class="path dark">
+        <div class="idx">02</div>
+        <div><h3>Melhorar e otimizar</h3><p class="q">“Nosso Zendesk não entrega o que deveria: automações empilhadas, tickets lentos e ninguém sabe o que é seguro mudar.”</p><a href="#contato" class="go">Quero otimizar ↗</a></div>
+        <ul><li>Health check da instância <span>DIAGNÓSTICO</span></li><li>Revisão de automações e gatilhos <span>LIMPEZA</span></li><li>Visualizações e dashboards <span>EXPLORE</span></li><li>Gestão de filas e capacidade <span>WFM</span></li></ul>
+      </article>
+      <article class="path orange">
+        <div class="idx">03</div>
+        <div><h3>Construir e expandir</h3><p class="q">“A base está sólida. Queremos IA, WhatsApp, um portal com a nossa cara e integração com nossos sistemas.”</p><a href="#contato" class="go">Quero expandir ↗</a></div>
+        <ul><li>AI Agents e Copilot <span>IA</span></li><li>WhatsApp e canais conversacionais <span>MENSAGERIA</span></li><li>Apps e integrações customizadas <span>API</span></li><li>Temas para Help Center <span>GUIDE</span></li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPECIALTIES ================= -->
+<section class="sec" style="padding-top:40px">
+  <div class="wrap">
+    <div class="eyebrow mono">Especialidades</div>
+    <div class="spec">
+      <a href="#contato"><span class="mono">01</span><span class="t">Zendesk Support</span><span class="d">Tickets, filas, SLAs e regras de negócio desenhadas para a sua operação.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">02</span><span class="t">AI Agents</span><span class="d">Atendimento 24/7 com IA que resolve, não só responde.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">03</span><span class="t">WhatsApp & mensageria</span><span class="d">Canais conversacionais e automações para operações de alto volume.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">04</span><span class="t">Zendesk Guide</span><span class="d">Help Center com layout personalizado e a identidade visual da sua marca.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">05</span><span class="t">Explore & relatórios</span><span class="d">Painéis claros para acompanhar e analisar o desempenho do time.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">06</span><span class="t">WFM & Quality Assurance</span><span class="d">Dimensionamento de equipe e qualidade das interações.</span><span class="ar">↗</span></a>
+      <a href="#contato"><span class="mono">07</span><span class="t">Apps & integrações</span><span class="d">Aplicativos customizados e integração com ERP, CRM e e-commerce.</span><span class="ar">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHOD (horizontal) ================= -->
+<section class="method" id="metodologia">
+  <div class="pin">
+    <div class="head">
+      <div><div class="eyebrow mono">Metodologia</div><h2 class="h2">Do diagnóstico ao <span class="o">go-live</span>.<br>E depois dele.</h2></div>
+      <p class="lead" style="color:rgba(255,255,255,.7)">Quatro fases com escopo claro e entregas padronizadas, seguidas de duas semanas de acompanhamento próximo.</p>
+    </div>
+    <div class="track" id="track">
+      <div class="phase"><div class="top mono"><span>Fase 01</span><span>↘</span></div><div><h3>Discovery</h3><p>Mapeamos necessidades e objetivos para entender o desafio a fundo e achar as melhores oportunidades.</p></div></div>
+      <div class="phase"><div class="top mono"><span>Fase 02</span><span>↘</span></div><div><h3>Planning</h3><p>Um plano estratégico sólido, com metas claras e soluções personalizadas, alinhado aos objetivos do projeto.</p></div></div>
+      <div class="phase"><div class="top mono"><span>Fase 03</span><span>↘</span></div><div><h3>Development</h3><p>Transformamos o plano em realidade, aplicando as melhores práticas e tecnologias do mercado.</p></div></div>
+      <div class="phase"><div class="top mono"><span>Fase 04</span><span>↘</span></div><div><h3>Delivery</h3><p>Solução pronta para operar, com qualidade, eficiência e uma experiência otimizada para o usuário.</p></div></div>
+      <div class="phase hc"><div class="top mono"><span>Incluso</span><span>✳</span></div><div><h3>Hypercare</h3><p>Duas semanas de acompanhamento após cada entrega: estabilidade, ajustes finos e suporte ágil enquanto o time se adapta.</p></div></div>
+    </div>
+    <div class="progress"><i id="prog"></i></div>
+  </div>
+</section>
+
+<!-- ================= SECTORS ================= -->
+<section class="sec" id="setores">
+  <div class="wrap">
+    <div class="paths-head" style="margin-bottom:0">
+      <div><div class="eyebrow mono">Setores</div><h2 class="h2">Zendesk para crescer, <span class="o">não só para atender</span>.</h2></div>
+      <p class="lead">Do e-commerce ao agronegócio, adaptamos a plataforma ao jeito que cada operação funciona.</p>
+    </div>
+    <div class="sectors">
+      <div class="sector"><div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg></div><h3>Varejo & e-commerce</h3><p>Menos contatos repetidos, picos de sazonalidade sob controle e WhatsApp integrado ao pedido.</p></div><div class="who mono">PACCO · Víssimo</div></div>
+      <div class="sector"><div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Fintechs & pagamentos</h3><p>Atendimento seguro, rastreável e escalável para alto volume transacional.</p></div><div class="who mono">Zig · Paytime</div></div>
+      <div class="sector"><div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V9l6 4V9l6 4V5l6 4v12z"/></svg></div><h3>Indústria & agronegócio</h3><p>Processos complexos, múltiplas áreas e integrações com sistemas legados.</p></div><div class="who mono">Bunge</div></div>
+      <div class="sector"><div><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></div><h3>Educação & serviços</h3><p>Help Center, autoatendimento e portais que dão autonomia ao público.</p></div><div class="who mono">SESI</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY ================= -->
+<section class="sec" id="por-que" style="padding-top:40px">
+  <div class="wrap why">
+    <div>
+      <div class="eyebrow mono">Por que a 8CX</div>
+      <h2 class="h2" style="margin-bottom:50px">Excelência não é sorte. <span class="o">É método.</span></h2>
+      <div class="why-list">
+        <div class="why-item"><span class="n mono">01</span><div><h4>Sócios com a mão na massa</h4><p>Os sócios participam das entregas, apoiam decisões técnicas e, quando preciso, configuram a plataforma pessoalmente.</p></div></div>
+        <div class="why-item"><span class="n mono">02</span><div><h4>Implementações rápidas, escopo claro</h4><p>Modelos pré-configurados e frameworks otimizados para operações de alto volume, com foco em ROI desde o início.</p></div></div>
+        <div class="why-item"><span class="n mono">03</span><div><h4>Squad funcional e squad tech</h4><p>Especialistas em produtos Zendesk e desenvolvedores de apps, integrações e temas, no mesmo time.</p></div></div>
+        <div class="why-item"><span class="n mono">04</span><div><h4>Autonomia para o seu time</h4><p>Ambientes organizados e sustentáveis, para que você gerencie a ferramenta sem depender da gente.</p></div></div>
+      </div>
+    </div>
+    <div class="quote-win">
+      <div class="win" style="position:static;width:auto;box-shadow:none;border-radius:0"><div class="bar"><div class="lights"><i class="c"></i><i class="m"></i><i class="x"></i></div><span class="title">DEPOIMENTO_CLIENTE.txt</span></div></div>
+      <blockquote>“Com o apoio da 8CX, alcançamos <span style="color:var(--orange)">60% de retenção</span> com os AI Agents da Zendesk, sem abrir mão da satisfação dos nossos clientes.”</blockquote>
+      <div class="by"><span class="av">EG</span><div><b style="color:var(--ink)">Eugenia Gomes</b><br>Coordenadora de Atendimento</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" style="padding-top:40px">
+  <div class="wrap faq">
+    <div><div class="eyebrow mono">Perguntas frequentes</div><h2 class="h2">Dúvidas<br><span class="o">comuns</span>.</h2></div>
+    <div>
+      <details open><summary>O que a 8CX faz?<i>+</i></summary><p>Somos uma consultoria especializada em Customer Experience e Zendesk. Implementamos a plataforma, otimizamos operações que já usam Zendesk e desenvolvemos IA, integrações, apps e temas sob medida.</p></details>
+      <details><summary>A 8CX é a mesma empresa que a Zendesk?<i>+</i></summary><p>Não. A Zendesk é a fabricante da plataforma; a 8CX é uma consultoria independente que ajuda empresas a tirar o máximo dela.</p></details>
+      <details><summary>Preciso ser uma empresa grande para trabalhar com vocês?<i>+</i></summary><p>Não. Temos foco em pequenas e médias empresas, com implementações rápidas e escopo claro, e também atendemos projetos de maior porte e complexidade.</p></details>
+      <details><summary>Já uso Zendesk. Por onde começo?<i>+</i></summary><p>Pelo diagnóstico. Analisamos a sua instância, apontamos o que está travando a operação e propomos um plano de melhorias priorizado.</p></details>
+      <details><summary>O que é o hypercare?<i>+</i></summary><p>São duas semanas de acompanhamento próximo depois de cada implementação ou melhoria, para garantir estabilidade, fazer ajustes finos e apoiar o time na adaptação.</p></details>
+      <details><summary>Vocês atendem fora do Brasil?<i>+</i></summary><p>Hoje atuamos a partir de São Paulo e já estamos estruturando a expansão para a América do Sul, Portugal, Europa e Estados Unidos.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="cta" id="contato">
+  <div class="wrap">
+    <div class="eyebrow mono" style="color:rgba(255,255,255,.8)">Contato</div>
+    <h2 id="ctaTitle">Vamos elevar o seu atendimento?</h2>
+    <div class="row">
+      <p>Conte o que está acontecendo no seu atendimento. A gente responde com uma visão honesta de por onde começar.</p>
+      <a href="mailto:contato@8cx.com.br" class="magnet" id="magnet"><span>Falar com um<br>especialista ↗</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="grid">
+      <div><img src="assets/logo-8cx.png" alt="8CX" style="height:30px;margin-bottom:18px"><p style="max-width:300px">Empowering CX with Zendesk excellence.</p></div>
+      <div><h5 class="mono">Serviços</h5><ul><li><a href="#servicos">Implementação</a></li><li><a href="#servicos">Otimização</a></li><li><a href="#servicos">IA & automação</a></li><li><a href="#servicos">Apps & integrações</a></li></ul></div>
+      <div><h5 class="mono">Empresa</h5><ul><li><a href="#por-que">Sobre</a></li><li><a href="#metodologia">Metodologia</a></li><li><a href="#setores">Setores</a></li><li><a href="https://www.linkedin.com/company/8cx/" target="_blank" rel="noopener">LinkedIn ↗</a></li></ul></div>
+      <div><h5 class="mono">Contato</h5><ul><li><a href="mailto:contato@8cx.com.br">contato@8cx.com.br</a></li><li><a href="https://wa.me/5511985396968?text=Ol%C3%A1!%20Acessei%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener">WhatsApp (11) 98539-6968</a></li><li>Av. Paulista, 1374<br>São Paulo — SP</li></ul></div>
+    </div>
+    <div class="base"><span>© 2026 8CX. Todos os direitos reservados.</span><span>São Paulo — SP ✳ Brasil</span></div>
+  </div>
+</footer>
+
+
+<!-- whatsapp widget -->
+<div class="wa" id="wa">
+  <div class="wa-card" id="waCard" role="dialog" aria-label="Fale com a 8CX no WhatsApp">
+    <div class="wa-head"><span class="wa-av"><img src="assets/logo-8cx-flat.png" alt=""><i class="wa-mini"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg></i></span><div><b>Fale com a 8CX</b><small>Atendimento comercial</small></div><span class="wa-pill"><svg viewBox="0 0 24 24" fill="#0b3d1f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg> WhatsApp</span></div>
+    <div class="wa-body" id="waBody">
+      <span class="wa-day">Hoje</span>
+      <div class="bub typing" id="waTyping"><i></i><i></i><i></i></div>
+      <div class="bub" id="waMsg1" style="display:none">Olá! 👋 Aqui é a 8CX.<time>agora</time></div>
+      <div class="bub" id="waMsg2" style="display:none">Quer conversar sobre o Zendesk da sua empresa? Chama a gente no WhatsApp.<time>agora</time></div>
+      <div class="bub me" id="waMe" style="display:none"><span class="lbl">Sua mensagem</span>Olá! Acessei o site de vocês e gostaria de mais informações<time>agora</time></div>
+    </div>
+    <a class="wa-cta" id="waCta" href="https://wa.me/5511985396968?text=Ol%C3%A1!%20Acessei%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="#0b3d1f"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg> Abrir conversa no WhatsApp</a>
+    <div class="wa-foot">Abre o WhatsApp com a mensagem já escrita</div>
+  </div>
+  <div class="wa-peek" id="waPeek"><span class="wa-av"><img src="assets/logo-8cx-flat.png" alt=""><i class="wa-mini"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg></i></span><div><b>Fale com a 8CX no WhatsApp</b><span>Tire suas dúvidas direto pelo app</span></div><span class="x" id="waPeekX" aria-label="Fechar">×</span></div>
+  <button class="wa-btn" id="waBtn" aria-label="Fale com a 8CX no WhatsApp" aria-expanded="false">
+    <span class="ic-wa"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg></span>
+    <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    <span class="wa-badge">1</span>
+  </button>
+</div>
+
+<template id="tpl-win">
+  <div class="win"><div class="bar"><div class="lights"><i class="c" title="Fechar"></i><i class="m"></i><i class="x"></i></div><span class="title"></span></div><div class="body"></div><div class="foot"><span class="mono" style="color:var(--muted)">8CX ✳ ZENDESK</span><a href="#contato">Falar sobre isso ↗</a></div></div>
+</template>
+
+<script>
+// safety net: never leave visitors stuck on the loader
+setTimeout(()=>{ const l=document.getElementById('loader'); if(l && getComputedStyle(l).display!=='none' && !window.gsap){ l.style.display='none'; } }, 4000);
+</script>
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<script src="assets/js/Draggable.min.js"></script>
+<script src="assets/js/SplitText.min.js"></script>
+<script>
+if(!window.gsap){ document.getElementById('loader').style.display='none'; throw new Error('GSAP indisponível'); }
+gsap.registerPlugin(ScrollTrigger, Draggable, SplitText);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = () => innerWidth < 900;
+
+/* ---------- desktop icons + window content ---------- */
+const ICONS = [
+  {id:'impl', name:'IMPLEMENTACAO.app', x:6, y:16, m:[14,11], thumb:'<div class="tile t-orange">ZD</div>',
+   win:`<div class="kicker mono">Caminho 01 ✳ Começando no Zendesk</div><h3>Implementação Zendesk do zero</h3><p>Configuração personalizada do Support, Guide e mensageria, com regras de negócio, filas e SLAs desenhados para a sua operação.</p><ul><li>Discovery e desenho da solução</li><li>Configuração de filas, gatilhos e automações</li><li>SLAs e acordos de nível de serviço</li><li>Treinamento e go-live acompanhado</li></ul>`},
+  {id:'otim', name:'HEALTH_CHECK.pdf', x:16, y:34, m:[38,11], thumb:'<div class="doc"><i class="l" style="top:12px"></i><i class="l" style="top:19px"></i><i class="l" style="top:26px;right:16px"></i><span class="badge">PDF</span></div>',
+   win:`<div class="kicker mono">Caminho 02 ✳ Melhorar e otimizar</div><h3>Health check da sua instância</h3><p>Raio-x completo do seu Zendesk: o que está travando a operação, o que é seguro mudar e por onde começar.</p><div class="mock-ui"><div class="mock-row"><span class="st o">ALERTA</span> 38 automações sem uso há 90 dias</div><div class="mock-row"><span class="st b">AJUSTE</span> Gatilhos conflitantes em 3 filas</div><div class="mock-row"><span class="st g">OK</span> SLAs configurados por prioridade</div></div><p class="mono" style="font-size:10px;color:var(--muted)">* exemplo ilustrativo</p>`},
+  {id:'ai', name:'AI_AGENTS.bot', x:5, y:56, m:[14,72], thumb:'<div class="tile t-ink"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></div>',
+   win:`<div class="kicker mono">Caminho 03 ✳ Construir e expandir</div><h3>AI Agents & Copilot</h3><p>Clientes perguntam 24/7. Com AI Agents, o seu atendimento também responde, e os agentes humanos ganham um copiloto para resolver mais rápido.</p><ul><li>AI Agents para mensageria e e-mail</li><li>Copilot para agentes</li><li>Fluxos inteligentes que reduzem trabalho manual</li></ul>`},
+  {id:'wpp', name:'WHATSAPP.chat', x:17, y:72, m:[38,72], thumb:'<div class="tile t-green"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg></div>',
+   win:`<div class="kicker mono">Mensageria</div><h3>WhatsApp e canais conversacionais</h3><p>Forte atuação em operações de alto volume e perfil transacional, com automações estratégicas e roteamento inteligente.</p><div class="mock-ui"><div class="mock-row"><span class="st g">WPP</span> “Onde está o meu pedido?” → resposta automática com rastreio</div><div class="mock-row"><span class="st b">BOT</span> Triagem → fila certa em segundos</div><div class="mock-row"><span class="st o">HUMANO</span> Casos complexos com contexto completo</div></div>`},
+  {id:'clientes', name:'CLIENTES', x:7, y:84, cls:'hide-m', thumb:'<div class="folder"><span class="tag">06</span></div>',
+   win:`<div class="kicker mono">Quem confia na 8CX</div><h3>Clientes</h3><div class="logo-grid"><div><img src="assets/clientes/vissimo.png" alt="Víssimo Group"></div><div><img src="assets/clientes/pacco.png" alt="PACCO"></div><div><img src="assets/clientes/bunge.png" alt="Bunge"></div><div><img src="assets/clientes/zig.png" alt="Zig"></div><div><img src="assets/clientes/paytime.png" alt="Paytime"></div><div><img src="assets/clientes/sesi.png" alt="SESI"></div></div><p>Os sócios também conduziram projetos em contas como Ambev (Zendesk Awards 2023), Johnson & Johnson e Bunge.</p>`},
+  {id:'dash', name:'DASHBOARDS.xls', x:82, y:15, m:[62,11], thumb:'<div class="tile t-paper"><svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>',
+   win:`<div class="kicker mono">Explore & relatórios</div><h3>Visualizações e dashboards</h3><p>Painéis intuitivos e relatórios detalhados para acompanhar e analisar o desempenho do time.</p><div class="mock-ui"><div class="mono" style="color:var(--muted)">Tickets resolvidos / semana</div><div class="bars"><i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:78%"></i><i style="height:86%"></i><i style="height:94%"></i></div></div>`},
+  {id:'int', name:'INTEGRACOES.api', x:91, y:30, m:[86,11], thumb:'<div class="tile t-blue"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>',
+   win:`<div class="kicker mono">Squad Tech</div><h3>Apps & integrações</h3><p>Desenvolvimento de aplicativos customizados e integrações com ERP, CRM, e-commerce e sistemas legados, garantindo performance e escalabilidade.</p><ul><li>Apps de sidebar e top bar</li><li>Integrações com ERP e e-commerce</li><li>Automações via API e webhooks</li></ul>`},
+  {id:'guide', name:'HELP_CENTER.html', x:82, y:50, m:[62,72], thumb:'<div class="doc"><i class="l" style="top:12px;background:var(--orange)"></i><i class="l" style="top:19px"></i><i class="l" style="top:26px"></i><span class="badge" style="background:#111">HTML</span></div>',
+   win:`<div class="kicker mono">Zendesk Guide</div><h3>Help Center com a sua cara</h3><p>Layouts personalizados e alinhados à identidade visual da marca, para o cliente se resolver sozinho, sem abrir ticket.</p><ul><li>Tema customizado</li><li>Estrutura de artigos e categorias</li><li>Formulários inteligentes</li></ul>`},
+  {id:'mig', name:'MIGRACAO.zip', x:92, y:66, cls:'hide-m', thumb:'<div class="folder"><span class="tag">ZIP</span></div>',
+   win:`<div class="kicker mono">Caminho 01 ✳ Começando no Zendesk</div><h3>Migração de dados</h3><p>Vindo de outra ferramenta? Levamos histórico de tickets, usuários e organizações para o Zendesk com segurança e sem parar a operação.</p>`},
+  {id:'hyper', name:'HYPERCARE.txt', x:81, y:82, m:[86,72], thumb:'<div class="tile t-orange" style="font-size:15px">2W</div>',
+   win:`<div class="kicker mono">Incluso em todo projeto</div><h3>Duas semanas de hypercare</h3><p>Depois de cada implementação ou melhoria, acompanhamos a operação de perto: estabilidade, ajustes finos e suporte ágil enquanto o time se adapta.</p>`},
+  {id:'fotos', name:'EVENTOS', x:30, y:12, cls:'hide-m', thumb:'<div class="folder"><span class="tag">JPG</span></div>',
+   win:`<div class="kicker mono">Bastidores</div><h3>8CX em eventos</h3><p>Aqui entram as fotos dos posts do LinkedIn: eventos, palestras e o dia a dia dos projetos.</p><div class="mock-ui" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${'<div style="aspect-ratio:1;border-radius:6px;background:repeating-linear-gradient(45deg,#ece7dd 0 8px,#f5f2ec 8px 16px)"></div>'.repeat(6)}</div><p><span class="ph">fotos do LinkedIn</span></p>`},
+];
+
+const desktop = document.getElementById('desktop');
+const iconEls = [];
+ICONS.forEach(d=>{
+  const el = document.createElement('div');
+  el.className = 'icon ' + (d.cls||'');
+  el.innerHTML = `<div class="thumb">${d.thumb}</div><div class="name">${d.name}</div>`;
+  el.dataset.id = d.id;
+  desktop.appendChild(el);
+  iconEls.push(el);
+});
+
+function placeIcons(){
+  const mob = isMobile();
+  iconEls.forEach((el,i)=>{ const d=ICONS[i], [x,y] = mob && d.m ? d.m : [d.x,d.y];
+    el.style.left = x + '%'; el.style.top = y + '%'; el.style.marginLeft = mob ? '-42px' : '-52px'; });
+}
+placeIcons();
+let lastMob = isMobile();
+addEventListener('resize',()=>{ if(isMobile()!==lastMob){ lastMob=isMobile(); placeIcons(); gsap.set(iconEls,{x:0,y:0,rotation:0}); } });
+
+/* windows */
+let zTop = 30, openCount = 0;
+const openWins = {};
+function openWindow(d){
+  if(openWins[d.id]){ const w=openWins[d.id]; w.style.zIndex=++zTop; gsap.fromTo(w,{x:'-=6'},{x:'+=6',duration:.06,repeat:5,yoyo:true}); return; }
+  const w = document.getElementById('tpl-win').content.firstElementChild.cloneNode(true);
+  w.querySelector('.title').textContent = d.name;
+  w.querySelector('.body').innerHTML = d.win;
+  desktop.appendChild(w);
+  const ww = w.offsetWidth, wh = w.offsetHeight;
+  const off = (openCount++ % 5) * 26;
+  w.style.left = Math.max(16,(desktop.clientWidth-ww)/2 + off - 40) + 'px';
+  w.style.top = Math.max(64,(desktop.clientHeight-wh)/2 + off - 40) + 'px';
+  w.style.zIndex = ++zTop;
+  openWins[d.id] = w;
+  gsap.from(w,{scale:.86,autoAlpha:0,y:20,duration:.45,ease:'back.out(1.6)'});
+  Draggable.create(w,{trigger:w.querySelector('.bar'),bounds:desktop,onPress(){w.style.zIndex=++zTop}});
+  w.addEventListener('pointerdown',()=>w.style.zIndex=++zTop);
+  w.querySelector('.c').addEventListener('click',e=>{e.stopPropagation();closeWindow(d.id)});
+  w.querySelector('.foot a').addEventListener('click',()=>closeWindow(d.id));
+}
+function closeWindow(id){
+  const w=openWins[id]; if(!w) return; delete openWins[id];
+  gsap.to(w,{scale:.92,autoAlpha:0,duration:.25,ease:'power2.in',onComplete:()=>w.remove()});
+}
+
+/* drag + select + open */
+let gravity = false;
+iconEls.forEach((el,i)=>{
+  Draggable.create(el,{
+    bounds:desktop, zIndexBoost:false, dragClickables:true,
+    onPress(){ iconEls.forEach(e=>e.classList.remove('sel')); el.classList.add('sel'); },
+    onClick(){ openWindow(ICONS[i]); },
+    onDragEnd(){ if(gravity) drop(el, true); }
+  });
+});
+desktop.addEventListener('pointerdown',e=>{ if(e.target===desktop||e.target.closest('.stage')) iconEls.forEach(x=>x.classList.remove('sel')); });
+
+/* gravity */
+function drop(el, single, slotLeft){
+  if(getComputedStyle(el).display==='none') return;
+  const floor = desktop.clientHeight - (isMobile() ? 80 : 20);
+  const vars = {y: floor - el.offsetTop - el.offsetHeight + gsap.utils.random(-6,6),
+    rotation:gsap.utils.random(-18,18), duration:gsap.utils.random(.9,1.4), ease:'bounce.out',
+    delay:single?0:gsap.utils.random(0,.25), overwrite:true};
+  if(slotLeft!=null) vars.x = slotLeft - el.offsetLeft;
+  gsap.to(el,vars);
+}
+// spread fallen icons across the floor, leaving the dock area free
+function floorSlots(n){
+  const W = desktop.clientWidth, dockHalf = isMobile() ? 0 : 250, iw = iconEls[0].offsetWidth;
+  const left = [16, W/2 - dockHalf - iw], right = [W/2 + dockHalf, W - iw - 16];
+  if(isMobile()) return Array.from({length:n},(_,i)=>16 + i*(W-iw-32)/Math.max(1,n-1));
+  const nl = Math.ceil(n/2), nr = n - nl;
+  const span = (r,k,i)=> r[0] + (k>1 ? i*(r[1]-r[0])/(k-1) : 0);
+  return [...Array.from({length:nl},(_,i)=>span(left,nl,i)), ...Array.from({length:nr},(_,i)=>span(right,nr,i))];
+}
+const gravBtn = document.getElementById('grav');
+gravBtn.addEventListener('click',()=>{
+  gravity = !gravity;
+  gravBtn.classList.toggle('on',gravity); gravBtn.setAttribute('aria-pressed',gravity);
+  if(gravity){
+    if(scrollY>40) scrollTo({top:0,behavior:'smooth'});
+    const vis = iconEls.filter(el=>getComputedStyle(el).display!=='none')
+      .sort((a,b)=>a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+    const slots = floorSlots(vis.length);
+    vis.forEach((el,i)=>drop(el,false,slots[i]));
+  } else {
+    iconEls.forEach(el=>gsap.to(el,{x:0,y:0,rotation:0,duration:.9,ease:'expo.out',overwrite:true}));
+  }
+});
+
+/* clock */
+function tick(){
+  const s = new Intl.DateTimeFormat('pt-BR',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date());
+  document.getElementById('clock').textContent = s.replace(/\./g,'').replace(',', '') + ' · SP';
+}
+tick(); setInterval(tick,15000);
+
+/* logo parallax tilt */
+const inner = document.getElementById('stageInner');
+const rx = gsap.quickTo(inner,'rotationX',{duration:.8,ease:'power3'});
+const ry = gsap.quickTo(inner,'rotationY',{duration:.8,ease:'power3'});
+desktop.addEventListener('pointermove',e=>{
+  if(isMobile()) return;
+  const r = desktop.getBoundingClientRect();
+  ry(((e.clientX-r.left)/r.width-.5)*14); rx(-((e.clientY-r.top)/r.height-.5)*10);
+});
+gsap.to('.ring-svg',{rotation:360,duration:18,repeat:-1,ease:'none',transformOrigin:'50% 50%'});
+
+/* ---------- menu ---------- */
+const menu = document.getElementById('menu');
+const menuTl = gsap.timeline({paused:true})
+  .set(menu,{visibility:'visible'})
+  .to(menu,{clipPath:'inset(0% 0 0 0)',duration:.7,ease:'expo.inOut'})
+  .from('#menu a .t',{yPercent:110,duration:.7,stagger:.05,ease:'expo.out'},'-=.3')
+  .from('#menu a .n, #menu .meta',{autoAlpha:0,duration:.4,stagger:.03},'-=.5');
+let menuOpen=false;
+function toggleMenu(force){
+  menuOpen = force ?? !menuOpen;
+  document.body.classList.toggle('menu-open',menuOpen);
+  menuOpen ? menuTl.timeScale(1).play() : menuTl.timeScale(1.6).reverse();
+}
+document.getElementById('burger').addEventListener('click',()=>toggleMenu());
+document.querySelector('.dock .ex').addEventListener('click',()=>toggleMenu());
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(menuOpen) toggleMenu(false); else Object.keys(openWins).forEach(closeWindow);} });
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const t = document.querySelector(a.getAttribute('href')); if(!t) return;
+  e.preventDefault(); setTimeout(()=>t.scrollIntoView({behavior:'smooth'}), menuOpen?0:0);
+}));
+
+/* ---------- intro ---------- */
+function intro(){
+  const tl = gsap.timeline();
+  tl.from('#bigLogo',{scale:.6,autoAlpha:0,filter:'blur(20px)',duration:1.2,ease:'expo.out'})
+    .from('.ring',{autoAlpha:0,scale:0,rotation:-90,duration:1,ease:'back.out(1.8)'},'<.5')
+    .from(new SplitText('#heroTitle',{type:'words'}).words,{yPercent:100,autoAlpha:0,stagger:.04,duration:.8,ease:'expo.out'},'<.2')
+    .from('.hero-copy p',{autoAlpha:0,y:10,duration:.6},'<.3')
+    .from(iconEls,{scale:0,autoAlpha:0,rotation:()=>gsap.utils.random(-30,30),stagger:{each:.05,from:'random'},duration:.6,ease:'back.out(2)'},'<-.2')
+    .from('.topbar > *, .top-right > *',{y:-30,autoAlpha:0,stagger:.05,duration:.6,ease:'expo.out'},'<')
+    .from('.dock',{y:90,autoAlpha:0,duration:.8,ease:'expo.out'},'<.2');
+}
+const pct = {v:0};
+gsap.timeline({onComplete:intro})
+  .to(pct,{v:100,duration:reduce?.1:1.3,ease:'power2.inOut',onUpdate(){ document.getElementById('pct').textContent=Math.round(pct.v); gsap.set('#loader .bar i',{width:pct.v+'%'}); }})
+  .to('#loader',{yPercent:-100,duration:.8,ease:'expo.inOut'})
+  .set('#loader',{display:'none'});
+
+/* ---------- scroll animations ---------- */
+// manifesto words light up
+const ms = new SplitText('#manifesto',{type:'words'});
+gsap.from(ms.words,{opacity:.12,stagger:.1,ease:'none',scrollTrigger:{trigger:'#manifesto',start:'top 80%',end:'bottom 45%',scrub:true}});
+
+// counters
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const end = +el.dataset.count, start = end>1000 ? end-40 : 0, o={v:start};
+  ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter(){
+    gsap.to(o,{v:end,duration:1.6,ease:'expo.out',onUpdate(){el.textContent=Math.round(o.v)}});
+  }});
+});
+
+// generic reveal for headings
+gsap.utils.toArray('.h2').forEach(h=>{
+  const s = new SplitText(h,{type:'lines',mask:'lines'});
+  gsap.from(s.lines,{yPercent:100,duration:1,stagger:.08,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 85%'}});
+});
+gsap.utils.toArray('.lead, .spec a, .sector, .why-item, .faq details').forEach(el=>{
+  gsap.from(el,{y:40,autoAlpha:0,duration:.9,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 90%'}});
+});
+
+
+// tram photo: window opens up and the image settles from a slow zoom
+gsap.fromTo('#photoWin',{clipPath:'inset(12% 10% 12% 10% round 24px)'},{clipPath:'inset(0% 0% 0% 0% round 16px)',ease:'none',
+  scrollTrigger:{trigger:'#photoWin',start:'top 95%',end:'top 25%',scrub:true}});
+gsap.fromTo('#photoImg',{scale:1.25},{scale:1,ease:'none',scrollTrigger:{trigger:'#photoWin',start:'top bottom',end:'bottom top',scrub:true}});
+
+// stacked path cards: scale down the ones behind
+const paths = gsap.utils.toArray('.path');
+paths.forEach((p,i)=>{
+  if(i===paths.length-1) return;
+  gsap.to(p,{scale:.94,opacity:.55,ease:'none',scrollTrigger:{trigger:paths[i+1],start:'top 85%',end:'top 140px',scrub:true}});
+});
+
+// method horizontal scroll
+const mm = gsap.matchMedia();
+mm.add('(min-width: 900px)',()=>{
+  const track = document.getElementById('track');
+  const dist = () => track.scrollWidth - innerWidth + 64;
+  gsap.to(track,{x:()=>-dist(),ease:'none',scrollTrigger:{trigger:'.method',pin:'.method .pin',start:'top top',end:()=>'+='+dist(),scrub:1,invalidateOnRefresh:true,
+    onUpdate:self=>gsap.set('#prog',{width:self.progress*100+'%'})}});
+  gsap.from('.phase',{y:60,autoAlpha:0,stagger:.08,duration:.8,ease:'expo.out',scrollTrigger:{trigger:'.method',start:'top 70%'}});
+});
+
+// CTA title + magnetic button
+const ct = new SplitText('#ctaTitle',{type:'chars,words'});
+gsap.from(ct.chars,{yPercent:120,rotation:8,stagger:.015,duration:.9,ease:'expo.out',scrollTrigger:{trigger:'.cta',start:'top 70%'}});
+const mag = document.getElementById('magnet');
+const mx = gsap.quickTo(mag,'x',{duration:.5,ease:'power3'}), my = gsap.quickTo(mag,'y',{duration:.5,ease:'power3'});
+mag.addEventListener('pointermove',e=>{const r=mag.getBoundingClientRect(); mx((e.clientX-r.left-r.width/2)*.35); my((e.clientY-r.top-r.height/2)*.35);});
+mag.addEventListener('pointerleave',()=>{mx(0);my(0)});
+gsap.to(mag,{rotation:360,duration:1,paused:true});
+
+
+/* ---------- whatsapp widget ---------- */
+(()=>{
+  const wa=document.getElementById('wa'), btn=document.getElementById('waBtn'), card=document.getElementById('waCard'),
+        peek=document.getElementById('waPeek'), typing=document.getElementById('waTyping'),
+        msgs=['waMsg1','waMsg2','waMe'].map(id=>document.getElementById(id));
+  let open=false, played=false, peekShown=false;
+  gsap.set(card,{autoAlpha:0,scale:.6,y:20});
+  function showPeek(){
+    if(open||peekShown) return; peekShown=true;
+    gsap.fromTo(peek,{autoAlpha:0,x:30,scale:.9},{autoAlpha:1,x:0,scale:1,duration:.7,ease:'back.out(1.7)'});
+    gsap.delayedCall(9,hidePeek);
+  }
+  function hidePeek(){ gsap.to(peek,{autoAlpha:0,x:20,duration:.3}); }
+  function playChat(){
+    if(played){ return; } played=true;
+    gsap.timeline()
+      .set(typing,{display:'inline-flex'})
+      .from(typing,{scale:.6,autoAlpha:0,duration:.3,transformOrigin:'0 0'})
+      .to({},{duration:.9})
+      .set(typing,{display:'none'})
+      .set(msgs[0],{display:'block'}).from(msgs[0],{y:12,autoAlpha:0,scale:.9,transformOrigin:'0 0',duration:.4,ease:'back.out(2)'})
+      .set(msgs[1],{display:'block'},'+=.35').from(msgs[1],{y:12,autoAlpha:0,scale:.9,transformOrigin:'0 0',duration:.4,ease:'back.out(2)'})
+      .set(msgs[2],{display:'block'},'+=.5').from(msgs[2],{y:12,autoAlpha:0,scale:.9,transformOrigin:'100% 0',duration:.45,ease:'back.out(2)'})
+      .from('#waCta',{y:10,autoAlpha:.4,duration:.4},'<');
+  }
+  function toggle(force){
+    open = force ?? !open;
+    wa.classList.toggle('open',open); wa.classList.add('seen');
+    btn.setAttribute('aria-expanded',open);
+    if(open){ hidePeek(); gsap.to(card,{autoAlpha:1,scale:1,y:0,duration:.55,ease:'back.out(1.5)'}); playChat(); }
+    else gsap.to(card,{autoAlpha:0,scale:.7,y:20,duration:.3,ease:'power2.in'});
+  }
+  btn.addEventListener('click',()=>toggle());
+  peek.addEventListener('click',e=>{ if(e.target.id==='waPeekX'){ e.stopPropagation(); hidePeek(); return; } toggle(true); });
+  document.getElementById('waCta').addEventListener('click',()=>toggle(false));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&open) toggle(false); });
+  document.addEventListener('pointerdown',e=>{ if(open && !wa.contains(e.target)) toggle(false); });
+  // entrance after the intro, then a gentle nudge
+  gsap.from(btn,{scale:0,rotation:-120,duration:1,ease:'elastic.out(1,.55)',delay:reduce?0:3.2});
+  gsap.delayedCall(reduce?1:7,showPeek);
+  gsap.to(btn,{rotation:12,duration:.12,repeat:5,yoyo:true,ease:'sine.inOut',delay:12,repeatDelay:0,onStart(){ if(open) this.kill(); }});
+})();
+
+// hide the top bar while scrolling down
+ScrollTrigger.create({start:0,end:'max',onUpdate(self){
+  const d = self.direction;
+  gsap.to('.topbar',{y: d===1 && self.scroll()>innerHeight*.6 ? -80 : 0,duration:.4,ease:'power3',overwrite:'auto'});
+}});
+</script>
+</body>
+</html>

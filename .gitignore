@@ -1,0 +1,6 @@
+# fora do site público
+_deploy/
+.DS_Store
+# configs da hospedagem Locaweb (não usadas no GitHub Pages)
+web.config
+.htaccess
