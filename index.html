@@ -75,6 +75,7 @@ img{display:block;max-width:100%}
 .ring{position:absolute;width:clamp(96px,10vw,150px);aspect-ratio:1;top:-8%;right:-7%;background:var(--paper);border-radius:50%;box-shadow:0 10px 30px rgba(0,0,0,.12);border:1px solid var(--line)}
 .ring text{font-family:var(--mono);font-size:27px;letter-spacing:4px;fill:var(--ink);font-weight:500}
 .ring .star{position:absolute;inset:0;display:grid;place-items:center;color:var(--orange);font-size:clamp(22px,2.4vw,34px)}
+.ring .star .ast{width:.9em;height:.9em}
 .hero-copy{text-align:center;max-width:620px;padding:0 20px}
 .hero-copy h1{font-size:clamp(26px,3.1vw,44px);line-height:1.02;letter-spacing:-.035em;font-weight:600}
 .hero-copy h1 em{font-style:normal;color:var(--orange)}
@@ -179,7 +180,7 @@ section{position:relative}
 .logos .lg{display:flex;align-items:center;gap:80px;height:60px}
 .logos .lg img{width:auto;opacity:.55;transition:opacity .3s}
 .logos .lg img:hover{opacity:1}
-.logos .lg::after{content:"✳";color:var(--orange);font-size:18px}
+.logos .lg::after{content:"";width:16px;height:16px;background:var(--orange);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='black' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='black' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
 .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
 .logo-grid div{background:#fff;border:1px solid var(--line);border-radius:10px;height:76px;display:grid;place-items:center;padding:14px}
 .logo-grid img{max-height:30px;max-width:100%;width:auto;opacity:.8}
@@ -344,6 +345,11 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
 @media (max-width:900px){ .photo{padding:80px 0 0} .photo-frame{aspect-ratio:4/3} .photo-frame img{object-position:58% 50%} }
 @media (max-width:560px){ .photo-cap{flex-direction:column;gap:6px} }
 
+
+/* estrela da marca (SVG, nunca vira emoji no celular) */
+.ast{display:inline-block;width:.78em;height:.78em;background:var(--orange);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='black' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg stroke='black' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3L5.3 18.7'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;vertical-align:-.06em;flex-shrink:0}
+.phase.hc .ast{background:#fff}
+
 /* ---------- responsive ---------- */
 @media (max-width:1180px){
   .sectors{grid-template-columns:1fr 1fr}
@@ -461,7 +467,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
       <div class="logo-box">
         <img class="big-logo" id="bigLogo" src="assets/logo-8cx.png" alt="8CX">
         <div class="ring" aria-hidden="true"><svg viewBox="0 0 400 400" class="ring-svg"><defs><path id="c" d="M200,200 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"/></defs>
-          <text><textPath href="#c" textLength="935">EMPOWERING CX ✳ ZENDESK EXCELLENCE ✳ </textPath></text></svg><span class="star">✳</span></div>
+          <text><textPath href="#c" textLength="935">EMPOWERING CX <tspan fill="#F25214">●</tspan> ZENDESK EXCELLENCE <tspan fill="#F25214">●</tspan> </textPath></text></svg><span class="star"><span class="ast" aria-hidden="true"></span></span></div>
       </div>
       <div class="hero-copy">
         <h1 id="heroTitle">Atendimento é a ponte entre <em>pessoas</em> e <em>marcas</em>.</h1>
@@ -488,7 +494,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
 
 <!-- ================= LOGOS ================= -->
 <section>
-  <div class="logos-head"><span class="mono" style="color:var(--muted)">Quem confia na 8CX</span><span class="mono" style="color:var(--muted)">06 clientes ✳ 2022 — hoje</span></div>
+  <div class="logos-head"><span class="mono" style="color:var(--muted)">Quem confia na 8CX</span><span class="mono" style="color:var(--muted)">06 clientes <span class="ast" aria-hidden="true"></span> 2022 — hoje</span></div>
   <div class="logos"><div class="row">
     <div class="lg"><img src="assets/clientes/vissimo.png" alt="Víssimo Group" style="height:40px" loading="lazy"></div><div class="lg"><img src="assets/clientes/pacco.png" alt="PACCO" style="height:34px" loading="lazy"></div><div class="lg"><img src="assets/clientes/bunge.png" alt="Bunge" style="height:30px" loading="lazy"></div><div class="lg"><img src="assets/clientes/zig.png" alt="Zig" style="height:42px" loading="lazy"></div><div class="lg"><img src="assets/clientes/paytime.png" alt="Paytime" style="height:26px" loading="lazy"></div><div class="lg"><img src="assets/clientes/sesi.png" alt="SESI" style="height:34px" loading="lazy"></div>
     <div class="lg"><img src="assets/clientes/vissimo.png" alt="Víssimo Group" style="height:40px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/pacco.png" alt="PACCO" style="height:34px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/bunge.png" alt="Bunge" style="height:30px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/zig.png" alt="Zig" style="height:42px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/paytime.png" alt="Paytime" style="height:26px" loading="lazy" aria-hidden="true"></div><div class="lg"><img src="assets/clientes/sesi.png" alt="SESI" style="height:34px" loading="lazy" aria-hidden="true"></div>
@@ -503,7 +509,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
       <div class="bar"><div class="lights"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></div><span class="title">BE_THE_COMPANY.jpg</span></div>
       <div class="photo-frame"><picture><source srcset="assets/zendesk-tram.webp" type="image/webp"><img id="photoImg" src="assets/zendesk-tram.jpg" alt="Bonde com a campanha da Zendesk: Be the company your customers want you to be" width="1377" height="681" loading="lazy"></picture></div>
     </div>
-    <div class="photo-cap mono"><span>✳ Be the company your customers want you to be.</span><span>8CX ✳ Especialistas em Zendesk</span></div>
+    <div class="photo-cap mono"><span><span class="ast" aria-hidden="true"></span> Be the company your customers want you to be.</span><span>8CX <span class="ast" aria-hidden="true"></span> Especialistas em Zendesk</span></div>
   </div>
 </section>
 
@@ -562,7 +568,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
       <div class="phase"><div class="top mono"><span>Fase 02</span><span>↘</span></div><div><h3>Planning</h3><p>Um plano estratégico sólido, com metas claras e soluções personalizadas, alinhado aos objetivos do projeto.</p></div></div>
       <div class="phase"><div class="top mono"><span>Fase 03</span><span>↘</span></div><div><h3>Development</h3><p>Transformamos o plano em realidade, aplicando as melhores práticas e tecnologias do mercado.</p></div></div>
       <div class="phase"><div class="top mono"><span>Fase 04</span><span>↘</span></div><div><h3>Delivery</h3><p>Solução pronta para operar, com qualidade, eficiência e uma experiência otimizada para o usuário.</p></div></div>
-      <div class="phase hc"><div class="top mono"><span>Incluso</span><span>✳</span></div><div><h3>Hypercare</h3><p>Duas semanas de acompanhamento após cada entrega: estabilidade, ajustes finos e suporte ágil enquanto o time se adapta.</p></div></div>
+      <div class="phase hc"><div class="top mono"><span>Incluso</span><span><span class="ast" aria-hidden="true"></span></span></div><div><h3>Hypercare</h3><p>Duas semanas de acompanhamento após cada entrega: estabilidade, ajustes finos e suporte ágil enquanto o time se adapta.</p></div></div>
     </div>
     <div class="progress"><i id="prog"></i></div>
   </div>
@@ -641,7 +647,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
       <div><h5 class="mono">Empresa</h5><ul><li><a href="#por-que">Sobre</a></li><li><a href="#metodologia">Metodologia</a></li><li><a href="#setores">Setores</a></li><li><a href="https://www.linkedin.com/company/8cx/" target="_blank" rel="noopener">LinkedIn ↗</a></li></ul></div>
       <div><h5 class="mono">Contato</h5><ul><li><a href="mailto:contato@8cx.com.br">contato@8cx.com.br</a></li><li><a href="https://wa.me/5511985396968?text=Ol%C3%A1!%20Acessei%20o%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es" target="_blank" rel="noopener">WhatsApp (11) 98539-6968</a></li><li>Av. Paulista, 1374<br>São Paulo — SP</li></ul></div>
     </div>
-    <div class="base"><span>© 2026 8CX. Todos os direitos reservados.</span><span>São Paulo — SP ✳ Brasil</span></div>
+    <div class="base"><span>© 2026 8CX. Todos os direitos reservados.</span><span>São Paulo — SP <span class="ast" aria-hidden="true"></span> Brasil</span></div>
   </div>
 </footer>
 
@@ -669,7 +675,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
 </div>
 
 <template id="tpl-win">
-  <div class="win"><div class="bar"><div class="lights"><i class="c" title="Fechar"></i><i class="m"></i><i class="x"></i></div><span class="title"></span></div><div class="body"></div><div class="foot"><span class="mono" style="color:var(--muted)">8CX ✳ ZENDESK</span><a href="#contato">Falar sobre isso ↗</a></div></div>
+  <div class="win"><div class="bar"><div class="lights"><i class="c" title="Fechar"></i><i class="m"></i><i class="x"></i></div><span class="title"></span></div><div class="body"></div><div class="foot"><span class="mono" style="color:var(--muted)">8CX <span class="ast" aria-hidden="true"></span> ZENDESK</span><a href="#contato">Falar sobre isso ↗</a></div></div>
 </template>
 
 <script>
@@ -689,11 +695,11 @@ const isMobile = () => innerWidth < 900;
 /* ---------- desktop icons + window content ---------- */
 const ICONS = [
   {id:'impl', name:'IMPLEMENTACAO.app', x:6, y:16, m:[14,11], thumb:'<div class="tile t-orange">ZD</div>',
-   win:`<div class="kicker mono">Caminho 01 ✳ Começando no Zendesk</div><h3>Implementação Zendesk do zero</h3><p>Configuração personalizada do Support, Guide e mensageria, com regras de negócio, filas e SLAs desenhados para a sua operação.</p><ul><li>Discovery e desenho da solução</li><li>Configuração de filas, gatilhos e automações</li><li>SLAs e acordos de nível de serviço</li><li>Treinamento e go-live acompanhado</li></ul>`},
+   win:`<div class="kicker mono">Caminho 01 <span class="ast" aria-hidden="true"></span> Começando no Zendesk</div><h3>Implementação Zendesk do zero</h3><p>Configuração personalizada do Support, Guide e mensageria, com regras de negócio, filas e SLAs desenhados para a sua operação.</p><ul><li>Discovery e desenho da solução</li><li>Configuração de filas, gatilhos e automações</li><li>SLAs e acordos de nível de serviço</li><li>Treinamento e go-live acompanhado</li></ul>`},
   {id:'otim', name:'HEALTH_CHECK.pdf', x:16, y:34, m:[38,11], thumb:'<div class="doc"><i class="l" style="top:12px"></i><i class="l" style="top:19px"></i><i class="l" style="top:26px;right:16px"></i><span class="badge">PDF</span></div>',
-   win:`<div class="kicker mono">Caminho 02 ✳ Melhorar e otimizar</div><h3>Health check da sua instância</h3><p>Raio-x completo do seu Zendesk: o que está travando a operação, o que é seguro mudar e por onde começar.</p><div class="mock-ui"><div class="mock-row"><span class="st o">ALERTA</span> 38 automações sem uso há 90 dias</div><div class="mock-row"><span class="st b">AJUSTE</span> Gatilhos conflitantes em 3 filas</div><div class="mock-row"><span class="st g">OK</span> SLAs configurados por prioridade</div></div><p class="mono" style="font-size:10px;color:var(--muted)">* exemplo ilustrativo</p>`},
+   win:`<div class="kicker mono">Caminho 02 <span class="ast" aria-hidden="true"></span> Melhorar e otimizar</div><h3>Health check da sua instância</h3><p>Raio-x completo do seu Zendesk: o que está travando a operação, o que é seguro mudar e por onde começar.</p><div class="mock-ui"><div class="mock-row"><span class="st o">ALERTA</span> 38 automações sem uso há 90 dias</div><div class="mock-row"><span class="st b">AJUSTE</span> Gatilhos conflitantes em 3 filas</div><div class="mock-row"><span class="st g">OK</span> SLAs configurados por prioridade</div></div><p class="mono" style="font-size:10px;color:var(--muted)">* exemplo ilustrativo</p>`},
   {id:'ai', name:'AI_AGENTS.bot', x:5, y:56, m:[14,72], thumb:'<div class="tile t-ink"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 12h.01M15 12h.01M9 16h6"/></svg></div>',
-   win:`<div class="kicker mono">Caminho 03 ✳ Construir e expandir</div><h3>AI Agents & Copilot</h3><p>Clientes perguntam 24/7. Com AI Agents, o seu atendimento também responde, e os agentes humanos ganham um copiloto para resolver mais rápido.</p><ul><li>AI Agents para mensageria e e-mail</li><li>Copilot para agentes</li><li>Fluxos inteligentes que reduzem trabalho manual</li></ul>`},
+   win:`<div class="kicker mono">Caminho 03 <span class="ast" aria-hidden="true"></span> Construir e expandir</div><h3>AI Agents & Copilot</h3><p>Clientes perguntam 24/7. Com AI Agents, o seu atendimento também responde, e os agentes humanos ganham um copiloto para resolver mais rápido.</p><ul><li>AI Agents para mensageria e e-mail</li><li>Copilot para agentes</li><li>Fluxos inteligentes que reduzem trabalho manual</li></ul>`},
   {id:'wpp', name:'WHATSAPP.chat', x:17, y:72, m:[38,72], thumb:'<div class="tile t-green"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 13.6c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.7-.1 1.4z"/></svg></div>',
    win:`<div class="kicker mono">Mensageria</div><h3>WhatsApp e canais conversacionais</h3><p>Forte atuação em operações de alto volume e perfil transacional, com automações estratégicas e roteamento inteligente.</p><div class="mock-ui"><div class="mock-row"><span class="st g">WPP</span> “Onde está o meu pedido?” → resposta automática com rastreio</div><div class="mock-row"><span class="st b">BOT</span> Triagem → fila certa em segundos</div><div class="mock-row"><span class="st o">HUMANO</span> Casos complexos com contexto completo</div></div>`},
   {id:'clientes', name:'CLIENTES', x:7, y:84, cls:'hide-m', thumb:'<div class="folder"><span class="tag">06</span></div>',
@@ -705,7 +711,7 @@ const ICONS = [
   {id:'guide', name:'HELP_CENTER.html', x:82, y:50, m:[62,72], thumb:'<div class="doc"><i class="l" style="top:12px;background:var(--orange)"></i><i class="l" style="top:19px"></i><i class="l" style="top:26px"></i><span class="badge" style="background:#111">HTML</span></div>',
    win:`<div class="kicker mono">Zendesk Guide</div><h3>Help Center com a sua cara</h3><p>Layouts personalizados e alinhados à identidade visual da marca, para o cliente se resolver sozinho, sem abrir ticket.</p><ul><li>Tema customizado</li><li>Estrutura de artigos e categorias</li><li>Formulários inteligentes</li></ul>`},
   {id:'mig', name:'MIGRACAO.zip', x:92, y:66, cls:'hide-m', thumb:'<div class="folder"><span class="tag">ZIP</span></div>',
-   win:`<div class="kicker mono">Caminho 01 ✳ Começando no Zendesk</div><h3>Migração de dados</h3><p>Vindo de outra ferramenta? Levamos histórico de tickets, usuários e organizações para o Zendesk com segurança e sem parar a operação.</p>`},
+   win:`<div class="kicker mono">Caminho 01 <span class="ast" aria-hidden="true"></span> Começando no Zendesk</div><h3>Migração de dados</h3><p>Vindo de outra ferramenta? Levamos histórico de tickets, usuários e organizações para o Zendesk com segurança e sem parar a operação.</p>`},
   {id:'hyper', name:'HYPERCARE.txt', x:81, y:82, m:[86,72], thumb:'<div class="tile t-orange" style="font-size:15px">2W</div>',
    win:`<div class="kicker mono">Incluso em todo projeto</div><h3>Duas semanas de hypercare</h3><p>Depois de cada implementação ou melhoria, acompanhamos a operação de perto: estabilidade, ajustes finos e suporte ágil enquanto o time se adapta.</p>`},
   {id:'fotos', name:'EVENTOS', x:30, y:12, cls:'hide-m', thumb:'<div class="folder"><span class="tag">JPG</span></div>',
