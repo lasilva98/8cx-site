@@ -22,7 +22,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="theme-color" content="#F4F1EA">
+<meta name="theme-color" content="#0b0b0b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -88,11 +88,21 @@ img{display:block;max-width:100%}
 .grav.on .toggle::after{transform:translateX(13px)}
 
 /* ---------- desktop hero ---------- */
-.desktop{position:relative;height:100vh;min-height:640px;overflow:hidden;
-  background-image:radial-gradient(rgba(17,17,17,.09) 1px,transparent 1px);background-size:22px 22px}
+.desktop{position:relative;height:100vh;min-height:640px;overflow:hidden;background:#0b0b0b;color:#fff}
+#heroFx{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;z-index:0}
+.desktop::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse at 50% 45%,#000 30%,transparent 80%)}
+.desktop::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.desktop .stage{z-index:2}
+.desktop .hero-copy h1{color:#fff}
+.desktop .hero-copy p{color:rgba(255,255,255,.62)}
+.desktop .icon .name{color:rgba(255,255,255,.88);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.desktop .icon.sel .name{color:#fff;text-shadow:none}
 .stage{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;perspective:900px}
 .stage-inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:26px;transform-style:preserve-3d}
-.big-logo{width:min(46vw,620px);filter:drop-shadow(0 30px 40px rgba(242,82,20,.25))}
+.big-logo{width:min(46vw,620px);filter:drop-shadow(0 30px 60px rgba(242,82,20,.45))}
 .logo-box{position:relative}
 .ring{position:absolute;width:clamp(96px,10vw,150px);height:clamp(96px,10vw,150px);top:-8%;right:-7%;background:var(--paper);border-radius:50%;box-shadow:0 10px 30px rgba(0,0,0,.12);border:1px solid var(--line);overflow:hidden}
 .ring .ring-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -486,6 +496,7 @@ footer .base{margin-top:70px;padding-top:22px;border-top:1px solid rgba(255,255,
 <main id="top">
 <!-- ================= HERO / DESKTOP ================= -->
 <section class="desktop" id="desktop">
+  <canvas id="heroFx" aria-hidden="true"></canvas>
   <div class="stage">
     <div class="stage-inner" id="stageInner">
       <div class="logo-box">
@@ -1006,6 +1017,66 @@ ScrollTrigger.create({start:0,end:'max',onUpdate(self){
   const d = self.direction;
   gsap.to('.topbar',{y: d===1 && self.scroll()>innerHeight*.6 ? -80 : 0,duration:.4,ease:'power3',overwrite:'auto'});
 }});
+</script>
+<script>
+/* capa: aurora laranja animada em canvas (sem vídeo, sem dependências) */
+(function(){
+  var c=document.getElementById('heroFx'); if(!c||!c.getContext) return;
+  var ctx=c.getContext('2d'), sec=document.getElementById('desktop');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var W=0,H=0,S=1,run=true,vis=true,raf=0,mx=.5,my=.45,tmx=.5,tmy=.45,t0=performance.now();
+  var blobs=[
+    {c:[242,82,20],  a:.62,r:.58,x:.08,y:.12,ax:.10,ay:.10,sx:.00011,sy:.00017,p:0},
+    {c:[255,138,61], a:.42,r:.46,x:.94,y:.70,ax:.08,ay:.14,sx:.00014,sy:.00009,p:2},
+    {c:[150,30,4],   a:.70,r:.62,x:.50,y:1.08,ax:.26,ay:.06,sx:.00008,sy:.00013,p:4},
+    {c:[255,190,140],a:.10,r:.28,x:.86,y:.16,ax:.08,ay:.08,sx:.00019,sy:.00012,p:1}
+  ];
+  function size(){ var r=sec.getBoundingClientRect(); S=Math.min(window.devicePixelRatio||1,1.5); W=r.width; H=r.height; c.width=Math.round(W*S); c.height=Math.round(H*S); ctx.setTransform(S,0,0,S,0,0); }
+  function draw(now){
+    var t=now-t0; mx+=(tmx-mx)*.03; my+=(tmy-my)*.03;
+    ctx.globalCompositeOperation='source-over'; ctx.fillStyle='#0b0b0b'; ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+    var m=Math.max(W,H);
+    for(var i=0;i<blobs.length;i++){
+      var b=blobs[i];
+      var x=(b.x+Math.sin(t*b.sx+b.p)*b.ax+(mx-.5)*.08*(i%2?1:-1))*W;
+      var y=(b.y+Math.cos(t*b.sy+b.p)*b.ay+(my-.5)*.06)*H;
+      var r=b.r*m*(1+Math.sin(t*.0002+b.p)*.06);
+      var g=ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,'rgba('+b.c+','+b.a+')'); g.addColorStop(.45,'rgba('+b.c+','+(b.a*.35)+')'); g.addColorStop(1,'rgba('+b.c+',0)');
+      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    }
+    /* área escura atrás do logo */
+    ctx.globalCompositeOperation='source-over';
+    var cx=W/2,cy=H*.44,cr=Math.min(W,H)*(W<700?.55:.48);
+    var sp=ctx.createRadialGradient(cx,cy,0,cx,cy,cr);
+    sp.addColorStop(0,'rgba(11,11,11,.82)'); sp.addColorStop(.6,'rgba(11,11,11,.45)'); sp.addColorStop(1,'rgba(11,11,11,0)');
+    ctx.fillStyle=sp; ctx.fillRect(0,0,W,H);
+    /* linhas de fluxo */
+    ctx.globalCompositeOperation='source-over'; ctx.lineWidth=1;
+    var n=W<700?12:22, step=W<700?14:10;
+    for(var k=0;k<n;k++){
+      ctx.beginPath();
+      for(var px=-20;px<=W+20;px+=step){
+        var yy=H*(.56+k*.017)+Math.sin(px*.0042+t*.00035+k*.28)*H*.06+Math.sin(px*.0016-t*.00022+k*.11)*H*.08-(mx-.5)*k*1.5;
+        px<=-20?ctx.moveTo(px,yy):ctx.lineTo(px,yy);
+      }
+      ctx.strokeStyle='rgba(255,150,100,'+(.035+k*.0045)+')'; ctx.stroke();
+    }
+    /* vinheta */
+    var v=ctx.createRadialGradient(W/2,H*.45,Math.min(W,H)*.25,W/2,H*.5,m*.75);
+    v.addColorStop(0,'rgba(11,11,11,0)'); v.addColorStop(1,'rgba(11,11,11,.6)');
+    ctx.fillStyle=v; ctx.fillRect(0,0,W,H);
+  }
+  function loop(now){ raf=0; if(!run||!vis) return; draw(now); raf=requestAnimationFrame(loop); }
+  function start(){ if(!raf&&run&&vis&&!reduce) raf=requestAnimationFrame(loop); }
+  size(); draw(performance.now()+8000);
+  window.addEventListener('resize',function(){ size(); draw(performance.now()); },{passive:true});
+  sec.addEventListener('pointermove',function(e){ var r=sec.getBoundingClientRect(); tmx=(e.clientX-r.left)/r.width; tmy=(e.clientY-r.top)/r.height; },{passive:true});
+  if('IntersectionObserver' in window) new IntersectionObserver(function(es){ vis=es[0].isIntersecting; start(); }).observe(sec);
+  document.addEventListener('visibilitychange',function(){ run=!document.hidden; start(); });
+  start();
+})();
 </script>
 </body>
 </html>
